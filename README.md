@@ -20,7 +20,7 @@ Contains the two files required for a `cargo release` action from the example in
 
 <!-- next-url -->
 
-[unreleased]: https://github.com/org/repo/compare/v1.0.0...HEAD
+[unreleased]: https://github.com/org/repo/compare/v0.0.0...HEAD
 ```
 
 ## When releasing
