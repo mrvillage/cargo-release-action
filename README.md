@@ -10,7 +10,7 @@ Contains the two files required for a `cargo release` action from the example in
 - Run `git update-index --chmod=+x ./.github/workflows/release-notes.py` to give `release-notes.py` the required execute permissions
 - Add `CHANGELOG.md` based on the following template, must always have an unreleased section and the comments below for it to be automatically updated
 - In `CHANGELOG.md` and `release.toml` update the GitHub URL to be the correct one for the repository
-- If publishing a binary package, edit `post-release.yaml` to remove the `if: false` from the `build-release` job
+- If publishing a binary package, edit `post-release.yaml` to remove the `if: false` from the `build-release` job and update the `BIN_NAME` environment variable to be the name of the binary package
 
 ```md
 # Changelog

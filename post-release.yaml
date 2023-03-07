@@ -8,6 +8,9 @@ on:
     tags:
     - "v*"
 
+env:
+  BIN_NAME: "BINARY_PACKAGE_NAME_HERE"
+
 jobs:
   create-release:
     name: create-release
