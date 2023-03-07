@@ -38,7 +38,7 @@ runs:
     - name: Generate Release notes
       shell: bash
       run: |
-        ./release-notes.py --tag ${{ env.RELEASE_VERSION }} --output notes-${{ env.RELEASE_VERSION }}.md
+        wget -qO- https://raw.githubusercontent.com/mrvillage/cargo-release-action/9d8dbe1dbd00f974ade1b3ea045730dc353fecfc/release-notes.py | /usr/bin/env python3 - --tag ${{ env.RELEASE_VERSION }} --output notes-${{ env.RELEASE_VERSION }}.md
         cat notes-${{ env.RELEASE_VERSION }}.md
     - name: Create release
       uses: actions/github-script@v6
