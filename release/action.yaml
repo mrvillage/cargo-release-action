@@ -1,0 +1,58 @@
+# Heavily inspired by https://github.com/crate-ci/cargo-release/blob/19a59b29d8864d1ce1c239c40e563dda1f46a7e9/.github/workflows/post-release.yml
+# See https://github.com/mrvillage/cargo-release-action for more info
+
+name: "cargo-release-action: create-release"
+description: "A GitHub Action for creating releases with cargo-release"
+
+inputs:
+  release_version:
+    description: "The version of the release"
+    default: ""
+    required: true
+
+outputs:
+  upload_url: 
+    description: "The URL to upload the release assets to"
+    value: ${{ env.UPLOAD_URL }}
+  release_version: 
+    description: "The version of the release"
+    value: ${{ env.RELEASE_VERSION }}
+
+runs:
+  using: composite
+  steps:
+    - name: Get the release version from the tag
+      shell: bash
+      if: inputs.release_version == ''
+      run: |
+        echo "RELEASE_VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+        echo "release_version=${{ env.RELEASE_VERSION }}" >> $GITHUB_OUTPUT
+        echo "version is: ${{ env.RELEASE_VERSION }}"
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 1
+    - name: Generate Release notes
+      shell: bash
+      run: |
+        ./release-notes.py --tag ${{ env.RELEASE_VERSION }} --output notes-${{ env.RELEASE_VERSION }}.md
+        cat notes-${{ env.RELEASE_VERSION }}.md
+    - name: Create release
+      uses: actions/github-script@v6
+      with: 
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          try {
+            const response = await github.rest.repos.createRelease({
+              draft: false,
+              generate_release_notes: true,
+              name: process.env.RELEASE_VERSION,
+              owner: context.repo.owner,
+              prerelease: false,
+              repo: context.repo.repo,
+              tag_name: process.env.RELEASE_VERSION,
+            });
+            core.exportVariable('UPLOAD_URL', response.data.upload_url);
+          } catch (error) {
+            core.setFailed(error.message);
+          }
