@@ -8,7 +8,7 @@ import pathlib
 import re
 import sys
 
-_STDIO = pathlib.Path("-")
+_STDIO = pathlib.Path("--")
 
 
 def main():
