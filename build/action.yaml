@@ -74,7 +74,7 @@ runs:
     env:
       GITHUB_TOKEN: ${{ inputs.github_token }}
     with:
-      upload_url: ${{ needs.create-release.outputs.upload_url }}
+      upload_url: ${{ inputs.upload_url }}
       asset_path: ${{ env.ASSET }}
       asset_name: ${{ env.ASSET }}
       asset_content_type: application/octet-stream
