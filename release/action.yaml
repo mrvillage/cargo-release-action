@@ -9,6 +9,9 @@ inputs:
     description: "The version of the release"
     default: ""
     required: true
+  github_token:
+    description: "The GitHub token to use"
+    required: true
 
 outputs:
   upload_url: 
@@ -40,7 +43,7 @@ runs:
     - name: Create release
       uses: actions/github-script@v6
       with: 
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ inputs.github_token }}
         script: |
           try {
             const response = await github.rest.repos.createRelease({
