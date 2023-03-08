@@ -16,7 +16,7 @@ inputs:
 outputs:
   upload_url: 
     description: "The URL to upload the release assets to"
-    value: ${{ env.UPLOAD_URL }}
+    value: ${{ steps.create-release.outputs.upload_url }}}
   release_version: 
     description: "The version of the release"
     value: ${{ env.RELEASE_VERSION }}
@@ -42,6 +42,7 @@ runs:
         cat notes-${{ env.RELEASE_VERSION }}.md
     - name: Create release
       uses: actions/github-script@v6
+      id: create-release
       with: 
         github-token: ${{ inputs.github_token }}
         script: |
@@ -55,7 +56,7 @@ runs:
               repo: context.repo.repo,
               tag_name: process.env.RELEASE_VERSION,
             });
-            core.exportVariable('UPLOAD_URL', response.data.upload_url);
+            core.setOutput('upload_url', response.data.upload_url);
           } catch (error) {
             core.setFailed(error.message);
           }
