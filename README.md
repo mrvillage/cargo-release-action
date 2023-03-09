@@ -1,16 +1,14 @@
 # cargo-release-action
 
-Contains the two files required for a `cargo release` action from the example in the repository with some small changes for my own needs.
+Contains a set of actions and utilities based on the `cargo release` action from the example in their repository.
 
 [https://github.com/crate-ci/cargo-release]
 
 ## Steps
 
-- Add `post-release.yaml` and `release-notes.py` to `.github/workflows` and `release.toml` to the root directory
-- Run `git update-index --chmod=+x ./.github/workflows/release-notes.py` to give `release-notes.py` the required execute permissions
-- Add `CHANGELOG.md` based on the following template, must always have an unreleased section and the comments below for it to be automatically updated
-- In `CHANGELOG.md` and `release.toml` update the GitHub URL to be the correct one for the repository
-- If publishing a binary package, edit `post-release.yaml` to remove the `if: false` from the `build-release` job and update the `BIN_NAME` environment variable to be the name of the binary package
+- Create your GitHub Action, the `post-release.yaml` file in this repository can be used as a good basis for your own workflow. If using the example directly be sure to update the `bin_name` input if you are releasing a binary package or remove build section otherwise.
+- Add `CHANGELOG.md` based on the following template, must always have an unreleased section and the comments below for it to be automatically updated.
+- In `CHANGELOG.md` and `release.toml` update the GitHub URL to be the correct one for the repository, if releasing a binary package.
 
 ```md
 # Changelog
