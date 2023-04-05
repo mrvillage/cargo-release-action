@@ -7,8 +7,9 @@ Contains a set of actions and utilities based on the `cargo release` action from
 ## Steps
 
 - Create your GitHub Action, the `post-release.yaml` file in this repository can be used as a good basis for your own workflow. If using the example directly be sure to update the `bin_name` input if you are releasing a binary package or remove build section otherwise.
+- Ensure that your GitHub Actions running on your repository have write permissions so they can create the release.
 - Add `CHANGELOG.md` based on the following template, must always have an unreleased section and the comments below for it to be automatically updated.
-- In `CHANGELOG.md` and `release.toml` update the GitHub URL to be the correct one for the repository, if releasing a binary package.
+- In `CHANGELOG.md` and `release.toml` update the GitHub URL to be the correct one for the repository.
 
 ```md
 # Changelog
