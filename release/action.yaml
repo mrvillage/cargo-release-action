@@ -28,8 +28,7 @@ runs:
       shell: bash
       if: inputs.release_version == ''
       run: |
-        echo "RELEASE_VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
-        echo "RELEASE_VERSION=$(echo "${{ env.RELEASE_VERSION }}" | sed 's/.*v/v/')" >> $GITHUB_ENV
+        echo "RELEASE_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
         echo "release_version=${{ env.RELEASE_VERSION }}" >> $GITHUB_OUTPUT
         echo "version is: ${{ env.RELEASE_VERSION }}"
     - name: Checkout repository
